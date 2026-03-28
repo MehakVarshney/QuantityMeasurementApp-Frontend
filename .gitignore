@@ -1,0 +1,21 @@
+# Eclipse files
+.project
+.classpath
+.settings/
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Node modules (for when we do React)
+node_modules/
+npm-debug.log
+
+# Environment files
+.env
+*.env
