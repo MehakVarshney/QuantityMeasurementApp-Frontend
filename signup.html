@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quanment - Sign Up</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f9fafb;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        nav {
+            background: #ffffff;
+            border-bottom: 0.5px solid #e5e7eb;
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: #1db954;
+            font-size: 22px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        nav a {
+            color: #6b7280;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        nav a:hover { color: #1db954; }
+
+        .banner {
+            background: #f0fdf4;
+            border-left: 4px solid #1db954;
+            padding: 16px 32px;
+            font-size: 16px;
+            color: #166534;
+            text-align: center;
+        }
+
+        .main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 16px;
+        }
+
+        .card {
+            background: #ffffff;
+            border: 0.5px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 40px;
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .card h2 {
+            font-size: 22px;
+            font-weight: 500;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            color: #374151;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 0.5px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #111827;
+            background: #f9fafb;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus {
+            border-color: #1db954;
+            background: #ffffff;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 11px;
+            background: #1db954;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 8px;
+        }
+
+        .btn-primary:hover { background: #17a349; }
+
+        .btn-google {
+            width: 100%;
+            padding: 11px;
+            background: #ffffff;
+            color: #374151;
+            border: 0.5px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-google:hover { background: #f9fafb; }
+
+        .btn-google img {
+            width: 18px;
+            height: 18px;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .divider hr {
+            flex: 1;
+            border: none;
+            border-top: 0.5px solid #e5e7eb;
+        }
+
+        .divider span {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        .footer-link {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .footer-link a {
+            color: #1db954;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer-link a:hover { text-decoration: underline; }
+
+        .error-msg {
+            background: #fef2f2;
+            border: 0.5px solid #fecaca;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 13px;
+            color: #dc2626;
+            margin-bottom: 16px;
+            display: none;
+        }
+
+        .success-msg {
+            background: #f0fdf4;
+            border: 0.5px solid #bbf7d0;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 13px;
+            color: #166534;
+            margin-bottom: 16px;
+            display: none;
+        }
+
+        /* Password strength indicator */
+        .strength-bar {
+            height: 4px;
+            border-radius: 2px;
+            margin-top: 6px;
+            background: #e5e7eb;
+            overflow: hidden;
+        }
+
+        .strength-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 0.3s, background 0.3s;
+            width: 0%;
+        }
+
+        .strength-text {
+            font-size: 11px;
+            color: #9ca3af;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <a href="index.html" class="logo">Quanment</a>
+        <a href="index.html">Login</a>
+    </nav>
+
+    <!-- Banner -->
+    <div class="banner">
+        Welcome To Quantity Measurement
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+        <div class="card">
+            <h2>Create account</h2>
+            <p>Sign up to start using Quanment</p>
+
+            <!-- Messages -->
+            <div class="error-msg" id="errorMsg"></div>
+            <div class="success-msg" id="successMsg"></div>
+
+            <!-- Signup Form -->
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" id="username"
+                       placeholder="Choose a username" />
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="password"
+                       placeholder="Choose a password"
+                       oninput="checkStrength(this.value)" />
+                <div class="strength-bar">
+                    <div class="strength-fill" id="strengthFill"></div>
+                </div>
+                <div class="strength-text" id="strengthText"></div>
+            </div>
+
+            <div class="form-group">
+                <label>Confirm Password</label>
+                <input type="password" id="confirmPassword"
+                       placeholder="Repeat your password" />
+            </div>
+
+            <button class="btn-primary" onclick="handleSignup()">
+                Create Account
+            </button>
+
+            <div class="divider">
+                <hr /> <span>or</span> <hr />
+            </div>
+
+            <!-- Google Signup -->
+            <button class="btn-google" onclick="handleGoogleLogin()">
+                <img src="https://www.google.com/favicon.ico" alt="Google" />
+                Continue with Google
+            </button>
+
+            <div class="footer-link">
+                Already have an account?
+                <a href="index.html">Login</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Password strength checker
+        function checkStrength(password) {
+            const fill = document.getElementById('strengthFill');
+            const text = document.getElementById('strengthText');
+
+            if (password.length === 0) {
+                fill.style.width = '0%';
+                text.textContent = '';
+                return;
+            }
+
+            let strength = 0;
+            if (password.length >= 8) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+
+            const levels = [
+                { width: '25%', color: '#ef4444', label: 'Weak' },
+                { width: '50%', color: '#f97316', label: 'Fair' },
+                { width: '75%', color: '#eab308', label: 'Good' },
+                { width: '100%', color: '#1db954', label: 'Strong' }
+            ];
+
+            const level = levels[strength - 1] || levels[0];
+            fill.style.width = level.width;
+            fill.style.background = level.color;
+            text.textContent = level.label;
+            text.style.color = level.color;
+        }
+
+        function handleSignup() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = 
+                document.getElementById('confirmPassword').value;
+            const errorMsg = document.getElementById('errorMsg');
+            const successMsg = document.getElementById('successMsg');
+
+            // Hide messages
+            errorMsg.style.display = 'none';
+            successMsg.style.display = 'none';
+
+            // Validate
+            if (!username || !password || !confirmPassword) {
+                errorMsg.style.display = 'block';
+                errorMsg.textContent = 'Please fill in all fields.';
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                errorMsg.style.display = 'block';
+                errorMsg.textContent = 'Passwords do not match.';
+                return;
+            }
+
+            if (password.length < 6) {
+                errorMsg.style.display = 'block';
+                errorMsg.textContent = 
+                    'Password must be at least 6 characters.';
+                return;
+            }
+
+            // Call Spring Boot register API
+            fetch('http://localhost:8080/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.message === 'User registered successfully!') {
+                    successMsg.style.display = 'block';
+                    successMsg.textContent = 
+                        'Account created! Redirecting to login...';
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 2000);
+                } else {
+                    errorMsg.style.display = 'block';
+                    errorMsg.textContent = 
+                        data.message || 'Registration failed.';
+                }
+            })
+            .catch(() => {
+                errorMsg.style.display = 'block';
+                errorMsg.textContent = 'Cannot connect to server.';
+            });
+        }
+
+        function handleGoogleLogin() {
+            window.location.href =
+                'http://localhost:8080/oauth2/authorization/google';
+        }
+    </script>
+
+</body>
+</html>
