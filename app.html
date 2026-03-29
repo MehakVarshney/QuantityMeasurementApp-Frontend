@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quanment - App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f9fafb;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navbar */
+        nav {
+            background: #ffffff;
+            border-bottom: 0.5px solid #e5e7eb;
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: #1db954;
+            font-size: 22px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-user {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .nav-user span {
+            color: #1db954;
+            font-weight: 500;
+        }
+
+        .btn-logout {
+            background: none;
+            border: 0.5px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 6px 14px;
+            font-size: 13px;
+            color: #6b7280;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-logout:hover {
+            border-color: #1db954;
+            color: #1db954;
+        }
+
+        .btn-history {
+            background: none;
+            border: none;
+            font-size: 14px;
+            color: #6b7280;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn-history:hover { color: #1db954; }
+
+        /* Banner */
+        .banner {
+            background: #f0fdf4;
+            border-left: 4px solid #1db954;
+            padding: 16px 32px;
+            font-size: 16px;
+            color: #166534;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main {
+            flex: 1;
+            padding: 32px;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Section Label */
+        .section-label {
+            font-size: 12px;
+            font-weight: 500;
+            color: #9ca3af;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        /* Type Cards */
+        .type-cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .type-card {
+            background: #ffffff;
+            border: 0.5px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .type-card:hover {
+            border-color: #1db954;
+        }
+
+        .type-card.active {
+            border: 1.5px solid #1db954;
+            background: #f0fdf4;
+        }
+
+        .type-card .icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .type-card .label {
+            font-size: 13px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .type-card.active .label {
+            color: #1db954;
+        }
+
+        /* Input Section */
+        .input-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .input-box {
+            background: #ffffff;
+            border: 0.5px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .input-box label {
+            font-size: 11px;
+            font-weight: 500;
+            color: #9ca3af;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .input-box input {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-size: 28px;
+            font-weight: 500;
+            color: #111827;
+            background: transparent;
+            margin-bottom: 12px;
+        }
+
+        .input-box select {
+            width: 100%;
+            border: none;
+            border-top: 0.5px solid #e5e7eb;
+            outline: none;
+            font-size: 13px;
+            color: #374151;
+            background: transparent;
+            padding-top: 10px;
+            cursor: pointer;
+        }
+
+        /* Operation Buttons */
+        .operations {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn-op {
+            padding: 8px 20px;
+            border: 0.5px solid #e5e7eb;
+            border-radius: 8px;
+            background: #ffffff;
+            font-size: 13px;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .btn-op:hover {
+            border-color: #1db954;
+            color: #1db954;
+        }
+
+        .btn-op.active {
+            background: #1db954;
+            color: #ffffff;
+            border-color: #1db954;
+        }
+
+        /* Result Box */
+        .result-box {
+            background: #ffffff;
+            border: 0.5px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 28px;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .result-value {
+            font-size: 32px;
+            font-weight: 500;
+            color: #1db954;
+        }
+
+        .result-placeholder {
+            font-size: 14px;
+            color: #9ca3af;
+        }
+
+        .result-error {
+            font-size: 14px;
+            color: #dc2626;
+        }
+
+        /* History Section */
+        .history-section {
+            background: #ffffff;
+            border: 0.5px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .history-title {
+            font-size: 15px;
+            font-weight: 500;
+            color: #111827;
+        }
+
+        .btn-clear {
+            font-size: 12px;
+            color: #dc2626;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 0.5px solid #f3f4f6;
+            font-size: 13px;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        .history-op {
+            background: #f0fdf4;
+            color: #166534;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .history-detail {
+            color: #374151;
+            flex: 1;
+            margin: 0 12px;
+        }
+
+        .history-result {
+            color: #1db954;
+            font-weight: 500;
+        }
+
+        .no-history {
+            text-align: center;
+            color: #9ca3af;
+            font-size: 13px;
+            padding: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <a href="app.html" class="logo">Quanment</a>
+        <div class="nav-right">
+            <span class="nav-user">Hello, <span id="navUsername">User</span></span>
+            <a class="btn-history" onclick="scrollToHistory()">History</a>
+            <button class="btn-logout" onclick="handleLogout()">Logout</button>
+        </div>
+    </nav>
+
+    <!-- Banner -->
+    <div class="banner">
+        Welcome To Quantity Measurement
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+
+        <!-- Choose Type -->
+        <div class="section-label">CHOOSE TYPE</div>
+        <div class="type-cards">
+            <div class="type-card active" onclick="selectType('LENGTH', this)">
+                <div class="icon">📏</div>
+                <div class="label">Length</div>
+            </div>
+            <div class="type-card" onclick="selectType('TEMPERATURE', this)">
+                <div class="icon">🌡️</div>
+                <div class="label">Temperature</div>
+            </div>
+            <div class="type-card" onclick="selectType('VOLUME', this)">
+                <div class="icon">🧪</div>
+                <div class="label">Volume</div>
+            </div>
+            <div class="type-card" onclick="selectType('WEIGHT', this)">
+                <div class="icon">⚖️</div>
+                <div class="label">Weight</div>
+            </div>
+        </div>
+
+        <!-- Input Section -->
+        <div class="input-section">
+            <div class="input-box">
+                <label>FROM</label>
+                <input type="number" id="fromValue" value="1" />
+                <select id="fromUnit" onchange="updateUnits()"></select>
+            </div>
+            <div class="input-box">
+                <label>TO</label>
+                <input type="number" id="toValue" value="0" />
+                <select id="toUnit" onchange="updateUnits()"></select>
+            </div>
+        </div>
+
+        <!-- Operations -->
+        <div class="section-label">OPERATION</div>
+        <div class="operations">
+            <button class="btn-op active" 
+                    onclick="selectOp('convert', this)">Convert</button>
+            <button class="btn-op" 
+                    onclick="selectOp('compare', this)">Compare</button>
+            <button class="btn-op" 
+                    onclick="selectOp('add', this)">Add</button>
+            <button class="btn-op" 
+                    onclick="selectOp('subtract', this)">Subtract</button>
+            <button class="btn-op" 
+                    onclick="selectOp('divide', this)">Divide</button>
+            <button class="btn-op active-green" 
+                    style="background:#1db954;color:#fff;border-color:#1db954"
+                    onclick="calculate()">Calculate ▶</button>
+        </div>
+
+        <!-- Result -->
+        <div class="section-label">RESULT</div>
+        <div class="result-box" id="resultBox">
+            <span class="result-placeholder">
+                Select values and click Calculate
+            </span>
+        </div>
+
+        <!-- History -->
+        <div class="history-section" id="historySection">
+            <div class="history-header">
+                <span class="history-title">History</span>
+                <button class="btn-clear" onclick="clearHistory()">
+                    Clear all
+                </button>
+            </div>
+            <div id="historyList">
+                <div class="no-history">No history yet</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Units for each type
+        const units = {
+            LENGTH: ['FEET', 'INCH', 'YARDS', 'CENTIMETERS'],
+            TEMPERATURE: ['CELSIUS', 'FAHRENHEIT', 'KELVIN'],
+            VOLUME: ['LITERS', 'MILLILITERS', 'GALLONS'],
+            WEIGHT: ['KILOGRAM', 'GRAM', 'POUNDS']
+        };
+
+        let currentType = 'LENGTH';
+        let currentOp = 'convert';
+        let history = JSON.parse(localStorage.getItem('history') || '[]');
+
+        // Check if user is logged in
+        window.onload = function() {
+            const token = localStorage.getItem('token');
+            const username = localStorage.getItem('username');
+
+            if (!token) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            document.getElementById('navUsername').textContent = 
+                username || 'User';
+            populateUnits();
+            renderHistory();
+        };
+
+        // Populate unit dropdowns
+        function populateUnits() {
+            const fromSelect = document.getElementById('fromUnit');
+            const toSelect = document.getElementById('toUnit');
+            const unitList = units[currentType];
+
+            fromSelect.innerHTML = unitList
+                .map(u => `<option value="${u}">${u}</option>`)
+                .join('');
+            toSelect.innerHTML = unitList
+                .map(u => `<option value="${u}">${u}</option>`)
+                .join('');
+
+            if (unitList.length > 1) toSelect.selectedIndex = 1;
+        }
+
+        // Select measurement type
+        function selectType(type, el) {
+            currentType = type;
+            document.querySelectorAll('.type-card')
+                .forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+            populateUnits();
+            document.getElementById('resultBox').innerHTML = 
+                '<span class="result-placeholder">Select values and click Calculate</span>';
+        }
+
+        // Select operation
+        function selectOp(op, el) {
+            currentOp = op;
+            document.querySelectorAll('.btn-op')
+                .forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        // Calculate
+        function calculate() {
+            const token = localStorage.getItem('token');
+            const fromValue = parseFloat(
+                document.getElementById('fromValue').value);
+            const toValue = parseFloat(
+                document.getElementById('toValue').value);
+            const fromUnit = document.getElementById('fromUnit').value;
+            const toUnit = document.getElementById('toUnit').value;
+
+            if (isNaN(fromValue)) {
+                showResult('Please enter a valid number', 'error');
+                return;
+            }
+
+            let url = `http://localhost:8080/api/v1/quantities/${currentOp}`;
+            let body = {};
+
+            if (currentOp === 'convert') {
+                body = {
+                    q: { value: fromValue, unit: fromUnit },
+                    targetUnit: toUnit
+                };
+            } else {
+                body = {
+                    q1: { value: fromValue, unit: fromUnit },
+                    q2: { value: toValue, unit: toUnit }
+                };
+            }
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+                body: JSON.stringify(body)
+            })
+            .then(res => {
+                if (res.status === 403) {
+                    window.location.href = 'index.html';
+                    return;
+                }
+                return res.json();
+            })
+            .then(data => {
+                if (data === undefined) return;
+
+                let resultText = '';
+                if (currentOp === 'compare') {
+                    resultText = data ? '✅ Equal' : '❌ Not Equal';
+                } else if (currentOp === 'convert') {
+                    resultText = `${data.value} ${data.unit}`;
+                } else if (currentOp === 'divide') {
+                    resultText = data.toFixed(2);
+                } else {
+                    resultText = `${data.value} ${data.unit}`;
+                }
+
+                showResult(resultText, 'success');
+
+                // Add to history
+                addToHistory(
+                    currentOp.toUpperCase(),
+                    `${fromValue} ${fromUnit} → ${toUnit}`,
+                    resultText
+                );
+            })
+            .catch(() => {
+                showResult('Cannot connect to server', 'error');
+            });
+        }
+
+        function showResult(text, type) {
+            const box = document.getElementById('resultBox');
+            if (type === 'success') {
+                box.innerHTML = 
+                    `<span class="result-value">${text}</span>`;
+            } else {
+                box.innerHTML = 
+                    `<span class="result-error">${text}</span>`;
+            }
+        }
+
+        // History functions
+        function addToHistory(op, detail, result) {
+            history.unshift({ op, detail, result });
+            if (history.length > 10) history.pop();
+            localStorage.setItem('history', JSON.stringify(history));
+            renderHistory();
+        }
+
+        function renderHistory() {
+            const list = document.getElementById('historyList');
+            if (history.length === 0) {
+                list.innerHTML = 
+                    '<div class="no-history">No history yet</div>';
+                return;
+            }
+
+            list.innerHTML = history.map(item => `
+                <div class="history-item">
+                    <span class="history-op">${item.op}</span>
+                    <span class="history-detail">${item.detail}</span>
+                    <span class="history-result">${item.result}</span>
+                </div>
+            `).join('');
+        }
+
+        function clearHistory() {
+            history = [];
+            localStorage.removeItem('history');
+            renderHistory();
+        }
+
+        function scrollToHistory() {
+            document.getElementById('historySection')
+                .scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('username');
+            window.location.href = 'index.html';
+        }
+
+        function updateUnits() {}
+    </script>
+
+</body>
+</html>
