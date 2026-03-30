@@ -424,12 +424,12 @@
 
     <script>
         // Units for each type
-        const units = {
-            LENGTH: ['FEET', 'INCH', 'YARDS', 'CENTIMETERS'],
-            TEMPERATURE: ['CELSIUS', 'FAHRENHEIT', 'KELVIN'],
-            VOLUME: ['LITERS', 'MILLILITERS', 'GALLONS'],
-            WEIGHT: ['KILOGRAM', 'GRAM', 'POUNDS']
-        };
+		const units = {
+		    LENGTH: ['FEET', 'INCH', 'YARDS', 'CENTIMETERS'],
+		    TEMPERATURE: ['CELSIUS', 'FAHRENHEIT'],
+		    VOLUME: ['LITRE', 'MILLILITRE', 'GALLON'],
+		    WEIGHT: ['KILOGRAM', 'GRAM','POUND']
+		};
 
         let currentType = 'LENGTH';
         let currentOp = 'convert';
@@ -504,17 +504,17 @@
             let url = `http://localhost:8080/api/v1/quantities/${currentOp}`;
             let body = {};
 
-            if (currentOp === 'convert') {
-                body = {
-                    q: { value: fromValue, unit: fromUnit },
-                    targetUnit: toUnit
-                };
-            } else {
-                body = {
-                    q1: { value: fromValue, unit: fromUnit },
-                    q2: { value: toValue, unit: toUnit }
-                };
-            }
+			if (currentOp === 'convert') {
+			    body = {
+			        q: { value: fromValue, unit: fromUnit, type: currentType },
+			        targetUnit: toUnit
+			    };
+			} else {
+			    body = {
+			        q1: { value: fromValue, unit: fromUnit, type: currentType },
+			        q2: { value: toValue, unit: toUnit, type: currentType }
+			    };
+			}
 
             fetch(url, {
                 method: 'POST',
@@ -531,32 +531,49 @@
                 }
                 return res.json();
             })
-            .then(data => {
-                if (data === undefined) return;
+			.then(data => {
+			    if (data === undefined) return;
 
-                let resultText = '';
-                if (currentOp === 'compare') {
-                    resultText = data ? '✅ Equal' : '❌ Not Equal';
-                } else if (currentOp === 'convert') {
-                    resultText = `${data.value} ${data.unit}`;
-                } else if (currentOp === 'divide') {
-                    resultText = data.toFixed(2);
-                } else {
-                    resultText = `${data.value} ${data.unit}`;
-                }
+			    // Check if backend returned an error
+			    if (data.status === 400 || data.status === 500 || data.error) {
+			        showResult('This operation is not supported yet for ' 
+			                   + currentType, 'error');
+			        return;
+			    }
 
-                showResult(resultText, 'success');
+			    let resultText = '';
+			    if (currentOp === 'compare') {
+			        resultText = data === true ? '✅ Equal' : '❌ Not Equal';
+			    } else if (currentOp === 'convert') {
+			        if (data.value !== undefined && data.unit !== undefined) {
+			            resultText = `${data.value} ${data.unit}`;
+			        } else {
+			            showResult('Operation not supported for ' 
+			                       + currentType, 'error');
+			            return;
+			        }
+			    } else if (currentOp === 'divide') {
+			        resultText = typeof data === 'number' ? 
+			                     data.toFixed(2) : 'Error';
+			    } else {
+			        if (data.value !== undefined && data.unit !== undefined) {
+			            resultText = `${data.value} ${data.unit}`;
+			        } else {
+			            showResult('Operation not supported for ' 
+			                       + currentType, 'error');
+			            return;
+			        }
+			    }
 
-                // Add to history
-                addToHistory(
-                    currentOp.toUpperCase(),
-                    `${fromValue} ${fromUnit} → ${toUnit}`,
-                    resultText
-                );
-            })
-            .catch(() => {
-                showResult('Cannot connect to server', 'error');
-            });
+			    showResult(resultText, 'success');
+
+			    // Add to history
+			    addToHistory(
+			        currentOp.toUpperCase(),
+			        `${fromValue} ${fromUnit} → ${toUnit}`,
+			        resultText
+			    );
+			})
         }
 
         function showResult(text, type) {
