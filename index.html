@@ -286,7 +286,7 @@
             }
 
             // Call Spring Boot login API
-            fetch('http://localhost:8080/auth/login', {
+            fetch('http://quantity-measurement-app-env.eba-4tjqqcpn.ap-south-1.elasticbeanstalk.com/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, password })
@@ -312,8 +312,8 @@
 
         function handleGoogleLogin() {
             // Redirect to Spring Boot Google OAuth2
-            window.location.href = 
-                'http://localhost:8080/oauth2/authorization/google';
+			window.location.href = 
+			    'http://quantity-measurement-app-env.eba-4tjqqcpn.ap-south-1.elasticbeanstalk.com/oauth2/authorization/google';
         }
     </script>
 
