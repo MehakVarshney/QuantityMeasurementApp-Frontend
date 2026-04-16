@@ -274,6 +274,16 @@
     </div>
 
     <script>
+		// Handle OAuth redirect
+		const params = new URLSearchParams(window.location.search);
+		const token = params.get("token");
+		const username = params.get("username");
+
+		if (token) {
+		    localStorage.setItem("token", token);
+		    localStorage.setItem("username", username);
+		    window.location.href = "app.html";
+		}
         function handleLogin() {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
@@ -286,7 +296,7 @@
             }
 
             // Call Spring Boot login API
-            fetch('http://quantity-measurement-app-env.eba-4tjqqcpn.ap-south-1.elasticbeanstalk.com/auth/login', {
+            fetch('https://quantitymeasurementapp-production-369b.up.railway.app/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, password })
@@ -313,7 +323,7 @@
         function handleGoogleLogin() {
             // Redirect to Spring Boot Google OAuth2
 			window.location.href = 
-			    'http://quantity-measurement-app-env.eba-4tjqqcpn.ap-south-1.elasticbeanstalk.com/oauth2/authorization/google';
+			    'https://quantitymeasurementapp-production-369b.up.railway.app/oauth2/authorization/google';
         }
     </script>
 

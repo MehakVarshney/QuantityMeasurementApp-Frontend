@@ -363,7 +363,7 @@
             }
 
             // Call Spring Boot register API
-            fetch('http://quantity-measurement-app-env.eba-4tjqqcpn.ap-south-1.elasticbeanstalk.com/auth/register', {
+            fetch('https://quantitymeasurementapp-production-369b.up.railway.app/auth/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, password })
@@ -391,7 +391,7 @@
 
         function handleGoogleLogin() {
 			window.location.href =
-			    'http://quantity-measurement-app-env.eba-4tjqqcpn.ap-south-1.elasticbeanstalk.com/oauth2/authorization/google';
+			    'https://quantitymeasurementapp-production-369b.up.railway.app/oauth2/authorization/google';
         }
     </script>
 
